@@ -17,14 +17,11 @@ import gps
 def init():
     global gpsPoints
     gpsPoints = gps.GPS()
-    host = "localhost"
-    port = 9999
+    port = 58974
     if len(sys.argv) >= 2:
-        host = str(sys.argv[1])
-    if len(sys.argv) >= 3:
-        port = int(sys.argv[2])
-    return (host, port)
-    
+        port = int(sys.argv[1])
+    return port
+
 
 class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
     """
@@ -34,7 +31,7 @@ class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
     def handle(self):
         GET  = "GET "
         POST = "POST "
-        
+
         # self.request is the TCP socket connected to the client
         self.data = self.request.recv(1024).strip()
         print("{0} wrote: ".format(self.client_address[0]) + self.data)
@@ -59,10 +56,10 @@ class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
 
 
 def main():
-    (host, port) = init()
+    port = init()
 
     # Create the socket server, binding to localhost on port 9999
-    server = SocketServer.TCPServer((host, port), GPSpointsRequestHandler)
+    server = SocketServer.TCPServer((str(), port), GPSpointsRequestHandler)
 
     # Activate the server; this will keep running until you interrupt
     # the program with Ctrl-C

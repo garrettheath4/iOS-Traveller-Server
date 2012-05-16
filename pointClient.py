@@ -11,7 +11,7 @@ import sys
 
 import socket
 
-HOST, PORT = "localhost", 9999
+HOST, PORT = "localhost", 58974
 
 def request(data):
     # Create a socket (SOCK_STREAM means a TCP socket)
@@ -45,13 +45,13 @@ def main():
     request("GET *ALL")
     request("GET New York City")
     request("GET No such city")
-    
+
     request("POST New York City -74.006393 40.714172")
 
     request("GET *ALL")
     request("GET New York City")
     request("GET No such city")
-    
+
 
 if __name__ == "__main__":
     main()
