@@ -1,0 +1,6 @@
+This is a project that is designed to be the server companion for the
+iOS-Traveller app.  The job of pointServer.py is to serve KML documents that
+contain the GPS coordinate of the requested point of interest (GET City)
+or of all points of interest (GET *ALL).
+pointServer.py uses gps.py to manage the GPS point of interest data.
+pointClient.py is an example client program to the pointServer.py program.
