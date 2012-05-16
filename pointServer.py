@@ -15,7 +15,6 @@ import gps
 def init():
     global gpsPoints
     gpsPoints = gps.GPS()
-    #gpsPoints.updatePoint('New York City', '-74.006393', '40.714172')
 
 class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
     """
@@ -28,8 +27,7 @@ class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
         
         # self.request is the TCP socket connected to the client
         self.data = self.request.recv(1024).strip()
-        print("{} wrote:".format(self.client_address[0]))
-        print(self.data)
+        print("{} wrote: ".format(self.client_address[0]) + self.data)
 
         if self.data.upper().startswith(GET):
             request = self.data[len(GET):]
@@ -48,8 +46,6 @@ class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
                 self.request.sendall("UPDATED\n")
             else:
                 self.request.sendall("ERROR\n")
-            
-
 
 
 def main():
@@ -62,7 +58,10 @@ def main():
 
     # Activate the server; this will keep running until you interrupt
     # the program with Ctrl-C
-    server.serve_forever()
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
 
 if __name__ == "__main__":
     main()

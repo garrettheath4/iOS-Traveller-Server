@@ -7,12 +7,16 @@ to a .KML formatted XML document.
 Author: Garrett Heath Koller
 """
 
+import os
+
+import pickle
 from lxml import etree as ET
 
 
 class GPS:
     def __init__(self):
         self.GPSpoints = {}
+        self.fileName = "gps_data.dat"
 
     def updatePoint(self, gpsName, gpsLat, gpsLon):
         self.GPSpoints[gpsName] = (gpsName, gpsLat, gpsLon)
@@ -54,18 +58,51 @@ class GPS:
         # tree = ET.ElementTree(root)
         # tree.write('output.xml', pretty_print=True, xml_declaration=True)
 
+    def save(self, fileName = None):
+        """Saves pickled accounts to a file.  The parameter
+        allows the user to change file names."""
+        if fileName != None:
+            self.fileName = fileName
+        elif self.fileName == None:
+            raise ValueError("No filename given to save GPS data as")
+        fileObj = open(self.fileName, 'wb')
+        pickle.dump(self.GPSpoints, fileObj)
+        fileObj.close()
+
+    def load(self, fileName = None):
+        if fileName != None:
+            self.fileName = fileName
+        elif self.fileName == None:
+            raise ValueError("No filename given to load GPS data from")
+        fileObj = open(self.fileName, 'rb')
+        self.GPSpoints = pickle.load(fileObj)
+        fileObj.close()
 
 
-def main():
+def testSave():
     gps = GPS()
     gps.updatePoint('New York City', '-74.006393', '40.714172')
-    print(gps.getAllPoints())
+    gps.save()
+
+def testLoad():
+    gps2 = GPS()
+    gps2.load()
+    print(gps2.getAllPoints())
+
+def testLoadIfExists():
+    gps3 = GPS()
+    if os.path.exists("./" + gps3.fileName):
+        testLoad()
+    else:
+        print(gps3.fileName + " does not exist\n")
+
+def main():
+    testLoadIfExists()
+    testSave()
+    testLoad()
 
 if __name__ == '__main__':
     main()
-
-
-
 
 
 
