@@ -8,6 +8,8 @@ Note that this module requires the gps.py module to manage the GPS point data.
 Author: Garrett Heath Koller
 """
 
+import sys
+
 import SocketServer
 import gps
 
@@ -15,6 +17,14 @@ import gps
 def init():
     global gpsPoints
     gpsPoints = gps.GPS()
+    host = "localhost"
+    port = 9999
+    if len(sys.argv) >= 2:
+        host = str(sys.argv[1])
+    if len(sys.argv) >= 3:
+        port = int(sys.argv[2])
+    return (host, port)
+    
 
 class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
     """
@@ -49,12 +59,10 @@ class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
 
 
 def main():
-    init()
-
-    HOST, PORT = "localhost", 9999
+    (host, port) = init()
 
     # Create the socket server, binding to localhost on port 9999
-    server = SocketServer.TCPServer((HOST, PORT), GPSpointsRequestHandler)
+    server = SocketServer.TCPServer((host, port), GPSpointsRequestHandler)
 
     # Activate the server; this will keep running until you interrupt
     # the program with Ctrl-C

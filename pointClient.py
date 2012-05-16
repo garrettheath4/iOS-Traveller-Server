@@ -7,6 +7,8 @@ the running pointServer.
 Author: Garrett Heath Koller
 """
 
+import sys
+
 import socket
 
 HOST, PORT = "localhost", 9999
@@ -28,7 +30,18 @@ def request(data):
     print "Sent:     {0}".format(data)
     print "Received: {0}".format(received)
 
+
+def init():
+    global HOST
+    global PORT
+    if len(sys.argv) >= 2:
+        HOST = str(sys.argv[1])
+    if len(sys.argv) >= 3:
+        PORT = int(sys.argv[2])
+
 def main():
+    init()
+    print("Connecting to %s on port %d." % (HOST, PORT))
     request("GET *ALL")
     request("GET New York City")
     request("GET No such city")
