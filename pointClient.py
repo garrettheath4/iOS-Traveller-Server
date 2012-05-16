@@ -25,8 +25,8 @@ def request(data):
     finally:
         sock.close()
 
-    print "Sent:     {}".format(data)
-    print "Received: {}".format(received)
+    print "Sent:     {0}".format(data)
+    print "Received: {0}".format(received)
 
 def main():
     request("GET *ALL")
