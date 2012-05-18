@@ -39,7 +39,9 @@ class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
         if self.data.upper().startswith(GET):
             request = self.data[len(GET):]
             if request.upper() == "*ALL":
-                self.request.sendall(gpsPoints.getAllPoints())
+                sendStr = gpsPoints.getAllPoints()
+                print("Sending data: " + sendStr)
+                self.request.sendall(sendStr + '\n')
             else:
                 self.request.sendall(gpsPoints.getPoint(request))
         elif self.data.upper().startswith(POST):
@@ -53,6 +55,7 @@ class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
                 self.request.sendall("UPDATED\n")
             else:
                 self.request.sendall("ERROR\n")
+        self.request.close()
 
 
 def main():
