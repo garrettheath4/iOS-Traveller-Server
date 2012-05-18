@@ -37,7 +37,7 @@ class GPS:
            ( name(str), description(str), latitude(str), longitude(str) )
         , and returns a string in the .KML format (an XML document).
         """
-        
+
         root = ET.Element('kml', {'xmlns':"http://www.opengis.net/kml/2.2"})
         document = ET.SubElement(root, 'Document')
 
@@ -52,10 +52,11 @@ class GPS:
             coordinates      = ET.SubElement(point, 'coordinates')
             coordinates.text = '' + gpsLat + ',' + gpsLon + ',0'
 
-        return ET.tostring(root, encoding='UTF-8', pretty_print=True,
-                           xml_declaration=True)
+        tree = ET.ElementTree(root)
+
+        return ET.tostring(tree, encoding='UTF-8', pretty_print=True,
+                           xml_declaration=True).replace("'", '"')
         # write to file:
-        # tree = ET.ElementTree(root)
         # tree.write('output.xml', pretty_print=True, xml_declaration=True)
 
     def save(self, fileName = None):
