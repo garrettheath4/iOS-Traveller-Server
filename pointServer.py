@@ -54,6 +54,8 @@ class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
                 sendStr = "UPDATED"
             else:
                 sendStr = "ERROR"
+        else:
+            sendStr = ""
         if (DEBUG): print("Sending data: " + sendStr)
         self.request.sendall(sendStr + '\n')
         self.request.close()
