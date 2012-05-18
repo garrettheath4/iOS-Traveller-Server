@@ -39,9 +39,7 @@ def init():
     if len(sys.argv) >= 3:
         PORT = int(sys.argv[2])
 
-def main():
-    init()
-    print("Connecting to %s on port %d." % (HOST, PORT))
+def testNYC():
     request("GET *ALL")
     request("GET New York City")
     request("GET No such city")
@@ -52,6 +50,22 @@ def main():
     request("GET New York City")
     request("GET No such city")
 
+def placeBuses():
+    request("POST Traveller Bus #1 -79.450362 37.792104")
+    request("POST Traveller Bus #2 -79.449998 37.791757")
+    request("POST Traveller Bus #3 -79.448922 37.791583")
+    request("POST Traveller Bus #4 -79.450014 37.792037")
+
+def main():
+    init()
+    print("Connecting to %s on port %d." % (HOST, PORT))
+    #testNYC()
+
+    request("GET *ALL")
+
+    placeBuses()
+
+    request("GET *ALL")
 
 if __name__ == "__main__":
     main()
