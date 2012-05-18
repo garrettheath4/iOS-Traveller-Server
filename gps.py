@@ -50,7 +50,9 @@ class GPS:
             description.text = gpsName
             point = ET.SubElement(placemark, 'Point')
             coordinates      = ET.SubElement(point, 'coordinates')
-            coordinates.text = '' + gpsLat + ',' + gpsLon + ',0'
+            # Note that KML stores coordinates as longitude,latitude,
+            # not as latitude,longitude like you would think
+            coordinates.text = '' + gpsLon + ',' + gpsLat + ',0'
 
         tree = ET.ElementTree(root)
 

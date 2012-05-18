@@ -46,7 +46,7 @@ def main():
     request("GET New York City")
     request("GET No such city")
 
-    request("POST New York City -74.006393 40.714172")
+    request("POST New York City 40.714172 -74.006393")
 
     request("GET *ALL")
     request("GET New York City")
