@@ -38,7 +38,7 @@ class GPS:
         , and returns a string in the .KML format (an XML document).
         """
 
-        root = ET.Element('kml', {'xmlns':"http://www.opengis.net/kml/2.2"})
+        root = ET.Element('kml')
         document = ET.SubElement(root, 'Document')
 
         for data in points:
