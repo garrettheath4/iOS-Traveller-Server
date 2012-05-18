@@ -13,6 +13,7 @@ import sys
 import SocketServer
 import gps
 
+DEBUG=False
 
 def init():
     global gpsPoints
@@ -40,10 +41,8 @@ class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
             request = self.data[len(GET):]
             if request.upper() == "*ALL":
                 sendStr = gpsPoints.getAllPoints()
-                print("Sending data: " + sendStr)
-                self.request.sendall(sendStr + '\n')
             else:
-                self.request.sendall(gpsPoints.getPoint(request))
+                sendStr = gpsPoints.getPoint(request)
         elif self.data.upper().startswith(POST):
             request = self.data[len(POST):]
             parts = request.split(' ')
@@ -52,9 +51,11 @@ class GPSpointsRequestHandler(SocketServer.BaseRequestHandler):
                 gpsLat  = parts[-2]
                 gpsLon  = parts[-1]
                 gpsPoints.updatePoint(gpsName, gpsLat, gpsLon)
-                self.request.sendall("UPDATED\n")
+                sendStr = "UPDATED"
             else:
-                self.request.sendall("ERROR\n")
+                sendStr = "ERROR"
+        if (DEBUG): print("Sending data: " + sendStr)
+        self.request.sendall(sendStr + '\n')
         self.request.close()
 
 
