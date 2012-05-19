@@ -1,3 +1,4 @@
 *~
+*.swp
 *.pyc
 gps_data.dat
