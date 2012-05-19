@@ -460,7 +460,7 @@ def main():
             idx = 0
         else:
             idx += 1
-        sleep(1)
+        sleep(2)
 
 if __name__ == "__main__":
     main()
